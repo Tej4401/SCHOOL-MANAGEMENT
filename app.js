@@ -16,6 +16,92 @@ mongoose
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.text({ type: 'text/html' }))
 app.use(bodyParser.json());
+app.get('/admin-login',(req,res,next)=>{
+    res.render('admin-login', {
+        msg1: "",
+        msg2: ""
+    });
+})
+app.post('/admin', (req, res, next) => {
+    if (req.body.password == "password"){
+        res.render('admin');
+    }
+})
+app.post('/details', (req, res, next) => {
+    if (req.body.category == "faculty") {
+        res.render('faculty-admin',{
+            msg:""
+        });
+    }
+    else if (req.body.category == "student") {
+        res.render('student-admin',{
+            msg:""
+        });
+    };
+})
+app.post('/studentDelete', (req, res, next) => {
+    Student.deleteOne({ rollno: req.body.rollno }, function (err, question) {
+        if (err) {
+            console.log(err);
+        }
+        });
+    res.render('deleted');
+})
+app.post('/facultyDelete', (req, res, next) => {
+    Teacher.deleteOne({ teacherid: req.body.teacherid }, function (err, question) {
+        if (err) {
+            console.log(err);
+        }
+    });
+    res.render('deleted');
+})
+app.post('/student-view', (req, res, next) => {
+    Student.find({ rollno: req.body.rollno })
+        .then((student) => {
+            if (student.length != 0) {
+                res.render('studentAdmin', {
+                    name: student[0].name,
+                    rollno: student[0].rollno,
+                    dob: student[0].dob,
+                    sex: student[0].sex,
+                    clas: student[0].class,
+                    section: student[0].section,
+                    msg: ""
+                });
+            }
+            else {
+                res.render('student-admin', {
+                    msg: "roll number not found"
+                });
+            }
+        })
+        .catch(err => {
+            console.log('Error is ', err.message);
+        })
+})
+app.post('/faculty-view', (req, res, next) => {
+    Teacher.find({ teacherid: req.body.teacherid })
+        .then((teacher) => {
+            if (teacher.length!=0) {
+                res.render('teacherAdmin', {
+                    name: teacher[0].name,
+                    teacherid: teacher[0].teacherid,
+                    courseid: teacher[0].courseid,
+                    department: teacher[0].department,
+                    contact: teacher[0].contact,
+                    msg: ""
+                });
+            }
+            else {
+                res.render('faculty-admin', {
+                    msg:" teacher id not found"
+                });
+            }
+        })
+        .catch(err => {
+            console.log('Error is ', err.message);
+        })
+})
 app.get('/student-login', (req, res, next) => {
     res.render('student-login',{
         msg1:"",
@@ -144,7 +230,7 @@ app.post('/studentProfile', (req, res) => {
             }
             else {
                 res.render('student-login', {
-                    msg1: "Teacher ID already in use",
+                    msg1: "",
                     msg2: "Wrong password"
                 });
             }
@@ -166,7 +252,7 @@ app.post('/teacherPost', (req, res) => {
             }
             else {
                 res.render('student-login', {
-                    msg1: "",
+                    msg1: "Duplicate Teacher ID",
                     msg2: ""
                 });
             }
