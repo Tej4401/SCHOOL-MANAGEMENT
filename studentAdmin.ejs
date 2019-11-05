@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <!-- <%= msg %> -->
+    <div id="nav">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#" style="background-color: aliceblue; color:black; padding: 0.5%;"><b>St.
+                    Rogers School</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/department">Department</a>
+                    </li>
+                    <li class="nav-item active dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Login
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/teacher-login">Faculty login</a>
+                            <a class="dropdown-item" href="/student-login">Student login</a>
+                            <a class="dropdown-item" href="/parent-login">Parent login</a>
+                            <a class="dropdown-item" href="/admin-login">Admin login</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="profile">
+            <div class="card text-center">
+                <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" onclick="myFunction2()">
+                                <div class="link"><u>VIEW</u></div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="myFunction1()">
+                                <div class="link"><u>EDIT</u></div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title"><%= name %></h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h6>ROLL NUMBER : <%= rollno%></h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6>DOB : <%= dob%></h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6>CLASS : <%=clas %></h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6>SECTION : <%= section%></h6>
+                        </li>
+                        <li class="list-group-item">
+                            <h6>SEX : <%= sex%></h6>
+                        </li>
+                    </ul>
+                    <form action="studentDelete" method="POST"><input type="hidden" name="rollno" id="rollno" value="<%= rollno %>"
+                            required><input type="submit" class="btn btn-danger button" name="upload" value="delete entry"></form>
+                </div>
+            </div>
+        </div>
+        <h2 style="text-align:center; background-color: aliceblue; margin:2%; padding:2%;"><%= msg %></h2>
+        <script>
+            myFunction1 = function () {
+                document.getElementById("profile").innerHTML = '<div class="card text-center"><div class="card-header"><ul class="nav nav-tabs card-header-tabs"><li class="nav-item"><a class="nav-link" href="#" onclick="myFunction2()"><div class="link"><u>VIEW</u></div></a></li><li class="nav-item"><a class="nav-link active" href="#" onclick="myFunction1()"><div class="link"><u>EDIT</u></div></a></li></ul></div ><div class="card-body"><form action="/studentUpdate" method="POST"><input type="hidden" name="rollno" id="rollno" value="<%= rollno %>" required><div class="form-group"><label>NAME:&nbsp;</label> <input type="text" class="form-control-sm" placeholder="name" name="newname" id="newname" value="<%= name %>" required><br></div><div class="form-group"><label>ROLL NUMBER: &nbsp;</label><input type="text" class="form-control-sm" placeholder="roll number" name="newrollno" id="newrollno" value="<%= rollno %>" required><br></div><div class="form-group"><div class="form-group"><label>DOB: &nbsp;</label><input type="date" class="form-control-sm" placeholder="dob" name="newdob" id="newdob" value="<%= dob %>" required><br></div><div class="form-group"><label>CLASS: &nbsp;</label><input type="number" class="form-control-sm" placeholder="class" name="newclass" id="newclass" value="<%= clas %>"required><br></div><p>SECTION:</p><div class="form-group"><select name="newsection" id="newsection" required><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><input type="submit" class="btn btn-success button" name="upload" value="submit changes"></form></div>';
+            };
+            myFunction2 = function () {
+                document.getElementById("profile").innerHTML = '<div class="card text-center"><div class="card-header"><ul class="nav nav-tabs card-header-tabs"><li class="nav-item"><a class="nav-link active" href="#" onclick="myFunction2()"><div class="link"><u>VIEW</u></div></a></li><li class="nav-item"><a class="nav-link" href="#" onclick="myFunction1()"><div class="link"><u>EDIT</u></div></a></li></ul></div ><div class="card-body"><h5 class="card-title"><%= name %></h5><ul class="list-group list-group-flush"><li class="list-group-item"><h6>ROLL NUMBER : <%= rollno%></h6></li><li class="list-group-item"><h6>DOB : <%= dob%></h6></li><li class="list-group-item"><h6>CLASS : <%= rollno%></h6></li><li class="list-group-item"><h6>SECTION : <%= section%></h6></li><li class="list-group-item"><h6>SEX : <%= sex%></h6></li></ul></div><form action="studentDelete" method="POST"><input type="hidden" name="rollno" id="rollno" value="<%= rollno %>" required><input type="submit" class="btn btn-danger button" name="upload" value="delete entry"></form><br>';
+            };
+        </script>
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>
+<style>
+    body {
+        background-color: darkgray;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    #nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        width: 100%;
+        height: 23px;
+    }
+
+    .card {
+        width: 50%;
+        background-color: whitesmoke;
+        margin-top: 25px;
+        margin-left: 360px;
+        border: solid;
+        border-width: 3px;
+        border-color: black;
+    }
+
+    h6 {
+        display: inline-block;
+        width: 10em;
+        /* text-align: left; */
+    }
+
+    .link {
+        color: black;
+    }
+
+    .link:hover {
+        color: blue;
+    }
+
+    label {
+        display: inline-block;
+        width: 9em;
+        text-align: left;
+    }
+</style>
